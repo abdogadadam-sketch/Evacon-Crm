@@ -8,6 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem('estateflow_theme') === 'dark' ? 'dark' : 'light';
+    } catch (_) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  </script>
   <style>
     :root{--bg:#f5f7fb;--nav:#0d1628;--nav2:#15243a;--ink:#16233c;--sub:#768299;--line:#e7ecf3;--primary:#305fe9;--primary-soft:#eaf0ff;--green:#168968;--red:#d44654;--amber:#e49a2d;--purple:#7e5ee6;--white:#fff;--radius:16px;--shadow:0 12px 36px rgba(19,35,65,.05)}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Cairo,Tahoma,Arial,sans-serif;color:var(--ink);font-size:13px}button,input,select,textarea{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}input,select,textarea{width:100%;border:1px solid #dbe2ec;background:#fff;border-radius:10px;padding:10px 12px;color:var(--ink);outline:none;min-height:42px}input:focus,select:focus,textarea:focus{border-color:#91a8f8;box-shadow:0 0 0 3px #305fe916}textarea{resize:vertical;min-height:82px}input[type=checkbox]{width:17px;min-height:auto;accent-color:var(--primary)}label{font-size:12px;color:#596984;font-weight:700;display:block;margin-bottom:6px}.muted{color:var(--sub)}.tiny{font-size:11px}.ltr{direction:ltr;unicode-bidi:plaintext}.hidden{display:none!important}
@@ -17,11 +24,73 @@
     .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:19px}.stat{background:white;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;min-height:116px}.stat .label{color:var(--sub);font-size:12px;font-weight:700}.stat .value{font-size:26px;font-weight:800;line-height:1.7}.stat .detail{color:var(--sub);font-size:11px}.stat .badge-icon{float:left;font-size:22px;background:#eff3ff;border-radius:10px;width:40px;height:40px;display:grid;place-items:center}.panel{background:white;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:var(--radius);padding:18px;margin-bottom:17px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}.cols-2{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:17px}.barline{display:grid;grid-template-columns:135px 1fr 40px;gap:9px;align-items:center;padding:8px 0}.barbg{height:9px;background:#edf1f7;border-radius:99px;overflow:hidden}.barfill{background:linear-gradient(90deg,#547cfc,#83a0ff);height:100%;border-radius:99px}.barlabel{font-weight:700;font-size:12px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}.table{width:100%;border-collapse:collapse;white-space:nowrap;font-size:12px;text-align:right}.table th{padding:13px 12px;background:#f8fafd;color:#78859d;font-size:11px;font-weight:800;border-bottom:1px solid var(--line)}.table td{padding:12px;border-bottom:1px solid #edf1f7;vertical-align:middle}.table tr:last-child td{border-bottom:0}.table tbody tr:hover{background:#fbfcff}.table .name{font-weight:800;color:#263957}.table .name:hover{color:var(--primary)}.pill{display:inline-flex;align-items:center;padding:4px 9px;border-radius:7px;background:#edf2ff;color:#3e60b1;font-weight:800;font-size:10px;white-space:nowrap}.pill.green{background:#e3f7ee;color:#11734e}.pill.red{background:#ffebed;color:#bb4351}.pill.amber{background:#fff5df;color:#9d6a18}.pill.purple{background:#f0eaff;color:#7752b4}.pill.gray{background:#f0f2f6;color:#637087}.badge-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:4px;background:currentColor}.empty{padding:38px;text-align:center;color:var(--sub);line-height:2}.filter-grid{display:grid;grid-template-columns:2fr repeat(4,minmax(120px,1fr));gap:9px;align-items:end}.filter-grid .field{min-width:0}.countline{color:var(--sub);font-size:12px;margin-top:8px}.actionset{display:flex;gap:5px}.clickable{cursor:pointer}.item-list{display:flex;flex-direction:column;gap:9px}.listitem{display:flex;align-items:center;justify-content:space-between;gap:13px;padding:12px;border:1px solid var(--line);border-radius:12px}.listitem strong{font-size:12px}.listitem p{font-size:11px;margin:3px 0 0;color:var(--sub)}.listitem.overdue{border-right:3px solid var(--red)}.listitem.today{border-right:3px solid var(--amber)}.report-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.match-card{padding:11px;border-radius:11px;border:1px solid var(--line);margin-bottom:7px;display:flex;gap:14px;align-items:center;justify-content:space-between}.match-card img{width:65px;height:55px;object-fit:cover;border-radius:7px}.login-error{color:#b42d46;background:#fff2f4;padding:11px;border-radius:9px}
     .modal-overlay{position:fixed;inset:0;background:rgba(9,17,34,.64);z-index:40;display:flex;justify-content:center;align-items:flex-start;overflow-y:auto;padding:25px 14px}.modal{width:min(740px,100%);background:white;border-radius:18px;margin:auto;box-shadow:0 30px 90px #09112266;overflow:hidden}.modal.wide{width:min(1030px,100%)}.modal-head{display:flex;justify-content:space-between;align-items:center;padding:19px 23px;border-bottom:1px solid var(--line);gap:10px}.modal-head h2{font-size:18px;margin:0}.modal-body{padding:22px;max-height:calc(100vh - 170px);overflow:auto}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.form-grid .full{grid-column:1/-1}.modal-foot{border-top:1px solid var(--line);padding:15px 22px;display:flex;gap:9px;justify-content:flex-end}.details-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.detail-block{padding:14px;background:#f8fafd;border-radius:12px}.detail-block span{font-size:11px;color:var(--sub)}.detail-block strong{display:block;font-size:13px;margin-top:2px}.timeline{border-right:2px solid #e9edf6;margin-right:8px;padding-right:19px}.timeline-entry{position:relative;margin-bottom:16px}.timeline-entry:before{content:'';width:10px;height:10px;border:3px solid #dfe7ff;background:#4e75e9;border-radius:100%;position:absolute;right:-26px;top:4px}.timeline-entry p{margin:3px 0;color:var(--sub);line-height:1.9}.tabs{display:flex;gap:8px;margin-bottom:13px;flex-wrap:wrap}.tab{border:1px solid #e5eaf4;background:#fff;border-radius:9px;padding:8px 12px;font-weight:800;color:#748096}.tab.active{background:#edf2ff;color:#3a62c9;border-color:#d6e0ff}.split-view{display:grid;grid-template-columns:.9fr 1.1fr;gap:16px}.toastbox{position:fixed;bottom:18px;left:18px;z-index:60;display:flex;flex-direction:column;gap:8px}.toast{background:#13243b;color:white;padding:12px 17px;border-radius:11px;box-shadow:0 9px 25px #0004;max-width:350px}.toast.error{background:#a62c40}.loading{text-align:center;padding:50px;color:var(--sub)}.mini{font-size:11px}.divider{height:1px;background:var(--line);margin:17px 0}.sr-only{position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden}.tag{display:inline-block;margin:3px;padding:4px 9px;border:1px solid #e4eaf3;background:#f7f9fc;border-radius:7px;color:#64738b;font-size:11px}
     @media(max-width:1250px){.stats{grid-template-columns:repeat(2,1fr)}.filter-grid{grid-template-columns:repeat(3,1fr)}.filter-grid .field:first-child{grid-column:1/-1}}@media(max-width:870px){.sidebar{transform:translateX(100%);transition:.2s}.sidebar.open{transform:translateX(0)}.main{margin-right:0;width:100%}.menu-toggle{display:inline-flex}.content{padding:20px 13px}.topbar{padding:0 14px;height:65px}.cols-2,.split-view{grid-template-columns:1fr}.pagehead h1{font-size:20px}.panel{padding:13px}}@media(max-width:540px){.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat{padding:12px;min-height:105px}.stat .value{font-size:22px}.stat .badge-icon{font-size:16px;width:30px;height:30px}.filter-grid{grid-template-columns:repeat(2,1fr)}.form-grid,.details-grid,.report-grid{grid-template-columns:1fr}.modal-body{padding:15px}.modal-head{padding:15px}.pagehead{align-items:flex-start;flex-direction:column}}
-    @media print{.sidebar,.topbar,.tools,.pagehead button,.filter-grid,.btn,.modal-overlay,.toastbox{display:none!important}.main{margin:0;width:100%}.content{padding:0}.panel,.stat{box-shadow:none}.table{white-space:normal}body{background:white}}
+
+    /* EstateFlow dark-mode palette and icon button */
+    .theme-toggle{width:39px;min-width:39px;height:39px;min-height:39px;padding:0;display:inline-flex;justify-content:center;align-items:center;font-size:20px;line-height:1;border-radius:12px;transition:background .15s ease,transform .15s ease}
+    .theme-toggle:hover{transform:translateY(-1px)}
+    .theme-toggle:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+    .auth-theme-toggle{position:fixed;top:18px;left:18px;z-index:5;box-shadow:0 8px 20px #0003}
+    html[data-theme="dark"]{color-scheme:dark;--bg:#0c1422;--nav:#08101e;--nav2:#152339;--ink:#eaf0fb;--sub:#a5b5cc;--line:#29384f;--primary:#7398ff;--primary-soft:#213456;--green:#55d1a5;--red:#ff8597;--amber:#fac06d;--purple:#bc9aff;--white:#142238;--shadow:0 14px 36px rgba(0,0,0,.20)}
+    html[data-theme="dark"] body{background:var(--bg)}
+    html[data-theme="dark"] .auth-screen{background:radial-gradient(700px 460px at 84% 15%,#243d73 0%,transparent 65%),linear-gradient(135deg,#080f1d,#0e213a)}
+    html[data-theme="dark"] .auth-card,
+    html[data-theme="dark"] .stat,
+    html[data-theme="dark"] .panel,
+    html[data-theme="dark"] .modal{background:#152238;color:var(--ink);border-color:var(--line)}
+    html[data-theme="dark"] .topbar{background:rgba(18,30,49,.96);border-bottom-color:var(--line)}
+    html[data-theme="dark"] input,
+    html[data-theme="dark"] select,
+    html[data-theme="dark"] textarea{background:#111d31;border-color:#354762;color:var(--ink)}
+    html[data-theme="dark"] input::placeholder,
+    html[data-theme="dark"] textarea::placeholder{color:#8292aa;opacity:1}
+    html[data-theme="dark"] input:focus,
+    html[data-theme="dark"] select:focus,
+    html[data-theme="dark"] textarea:focus{border-color:#7c9eff;box-shadow:0 0 0 3px rgba(115,152,255,.16)}
+    html[data-theme="dark"] label{color:#c1cde0}
+    html[data-theme="dark"] .btn{background:#20314c;border-color:#354662;color:var(--ink)}
+    html[data-theme="dark"] .btn:hover{filter:brightness(1.14)}
+    html[data-theme="dark"] .btn.primary{background:#4874ec;border-color:#4874ec;color:#fff}
+    html[data-theme="dark"] .btn.danger{background:#402437;border-color:#6b3e50;color:#ffc3cb}
+    html[data-theme="dark"] .btn.soft{background:var(--primary-soft);border-color:var(--primary-soft);color:#b8cbff}
+    html[data-theme="dark"] .link-button{color:#9ab8ff}
+    html[data-theme="dark"] .table th{background:#1c2e47;color:#b2bfd3;border-color:var(--line)}
+    html[data-theme="dark"] .table td{border-color:var(--line)}
+    html[data-theme="dark"] .table tbody tr:hover{background:#1d2d45}
+    html[data-theme="dark"] .table .name{color:#e5eeff}
+    html[data-theme="dark"] .table .name:hover{color:#a7bfff}
+    html[data-theme="dark"] .detail-block{background:#1d2e47}
+    html[data-theme="dark"] .barbg{background:#344661}
+    html[data-theme="dark"] .stat .badge-icon{background:#24395c}
+    html[data-theme="dark"] .hint{background:#1a2c47;border-color:#314969;color:#c1d6ff}
+    html[data-theme="dark"] .login-error{background:#422536;color:#ffb9c4}
+    html[data-theme="dark"] .pill{background:#263d63;color:#bbceff}
+    html[data-theme="dark"] .pill.green{background:#173d36;color:#81e7b7}
+    html[data-theme="dark"] .pill.red{background:#512c39;color:#ffaab5}
+    html[data-theme="dark"] .pill.amber{background:#4b3b23;color:#ffd191}
+    html[data-theme="dark"] .pill.purple{background:#392d57;color:#d1b6ff}
+    html[data-theme="dark"] .pill.gray{background:#2b3a50;color:#c2cee2}
+    html[data-theme="dark"] .tag{background:#22334b;border-color:#3c4d66;color:#c1cde0}
+    html[data-theme="dark"] .tab{background:#192940;border-color:#354765;color:#b6c5db}
+    html[data-theme="dark"] .tab.active{background:#2b416a;border-color:#5473ba;color:#d6e2ff}
+    html[data-theme="dark"] .timeline{border-color:#364962}
+    html[data-theme="dark"] .timeline-entry:before{border-color:#283f6b;background:#7c9eff}
+    html[data-theme="dark"] .toast{background:#253d5e}
+    html[data-theme="dark"] .toast.error{background:#8a344a}
+    html[data-theme="dark"] ::selection{background:#375caa;color:#fff}
+    @media(max-width:540px){
+      .topbar .top-actions{gap:5px;flex-wrap:nowrap}
+      .topbar .top-actions .action-label{display:none}
+      .topbar .top-actions .btn{min-width:33px;padding:5px 7px}
+      .topbar .top-actions .theme-toggle{min-width:35px;width:35px;height:35px;font-size:19px}
+    }
+    @media print{
+      html[data-theme="dark"]{color-scheme:light;--bg:#fff;--ink:#17243d;--sub:#637087;--line:#e5eaf0}
+      html[data-theme="dark"] .stat,html[data-theme="dark"] .panel,html[data-theme="dark"] .table th,html[data-theme="dark"] .table td{background:#fff;color:#17243d}
+      .sidebar,.topbar,.tools,.pagehead button,.filter-grid,.btn,.modal-overlay,.toastbox{display:none!important}.main{margin:0;width:100%}.content{padding:0}.panel,.stat{box-shadow:none}.table{white-space:normal}body{background:white}}
   </style>
 </head>
 <body>
-<!-- Configure these two PUBLIC client values before publishing. Never use a secret or service_role key. -->
+<!-- Enter the real Supabase URL and PUBLIC publishable/anon key below. Never use a secret/service_role key. -->
 <script>
   window.ESTATEFLOW_CONFIG = {
     url: 'https://zrhcyoharodbhguvptoe.supabase.co/rest/v1/',
@@ -29,6 +98,7 @@
   };
 </script>
 <div id="authScreen" class="auth-screen">
+  <button type="button" class="btn theme-toggle auth-theme-toggle" data-action="toggle-theme" title="تفعيل الوضع الداكن" aria-label="تفعيل الوضع الداكن" aria-pressed="false"><span class="theme-icon" aria-hidden="true">🌙</span></button>
   <div class="auth-card">
     <div class="logo-square">⌂</div>
     <h1>EstateFlow <span style="color:var(--primary)">CRM</span></h1>
@@ -41,7 +111,7 @@
     </form>
     <div id="loginMessage" class="auth-message"></div>
     <div style="text-align:center;margin-top:6px"><button type="button" class="link-button" data-action="reset-password">نسيت كلمة المرور؟</button></div>
-    <div style="text-align:center;margin-top:12px"><button class="link-button" type="button" data-action="show-config">إعداد الاتصال بـ Supabase</button></div>
+    
     <div class="auth-foot">حسابات الموظفين ينشئها مدير النظام من لوحة Supabase</div>
   </div>
 </div>
@@ -66,7 +136,12 @@
   <div class="main">
     <header class="topbar">
       <div class="btnrow"><button class="btn small menu-toggle" data-action="menu">☰</button><div><div class="who" id="topHello">أهلًا بك</div><div class="muted tiny" id="topDate"></div></div></div>
-      <div class="btnrow"><button class="btn small" data-action="refresh">↻ تحديث</button><button class="btn small" data-action="show-alerts" id="alertBtn">🔔 المتابعات</button><button class="btn small danger" data-action="logout">خروج</button></div>
+      <div class="btnrow top-actions">
+        <button type="button" class="btn small theme-toggle" data-action="toggle-theme" title="تفعيل الوضع الداكن" aria-label="تفعيل الوضع الداكن" aria-pressed="false"><span class="theme-icon" aria-hidden="true">🌙</span></button>
+        <button class="btn small" data-action="refresh" aria-label="تحديث البيانات" title="تحديث البيانات">↻ <span class="action-label">تحديث</span></button>
+        <button class="btn small" data-action="show-alerts" id="alertBtn" aria-label="المتابعات" title="المتابعات">🔔 <span class="action-label">المتابعات</span></button>
+        <button class="btn small danger" data-action="logout" aria-label="تسجيل الخروج" title="تسجيل الخروج">⇥ <span class="action-label">خروج</span></button>
+      </div>
     </header>
     <main class="content" id="pageContent"><div class="loading">جاري تحميل البيانات...</div></main>
   </div>
@@ -76,6 +151,26 @@
 <script>
 'use strict';
 const $ = id => document.getElementById(id);
+function syncThemeControls(){
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  document.querySelectorAll('[data-action="toggle-theme"]').forEach(button => {
+    const icon = button.querySelector('.theme-icon');
+    if(icon)icon.textContent = isDark ? '☀️' : '🌙';
+    const caption = isDark ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الداكن';
+    button.setAttribute('aria-label',caption);
+    button.setAttribute('title',caption);
+    button.setAttribute('aria-pressed',String(isDark));
+  });
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  if(themeColor)themeColor.setAttribute('content',isDark ? '#0c1422' : '#0b1222');
+}
+function toggleTheme(){
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = isDark ? 'light' : 'dark';
+  try { localStorage.setItem('estateflow_theme', document.documentElement.dataset.theme); } catch (_) {}
+  syncThemeControls();
+}
+syncThemeControls();
 const E = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl = value => { try { const u = new URL(value); return ['https:','http:'].includes(u.protocol) ? E(u.href) : ''; } catch { return ''; } };
 const digits = x => String(x||'').replace(/\D/g,'');
@@ -113,10 +208,35 @@ let client=null,user=null,profile=null,page='dashboard',activeLead=null,refreshi
 let config={},notifySeen=new Set(),filters={leads:{},properties:{}},selectedLeads=new Set(),detailTab='history';
 let data={profiles:[],leads:[],activities:[],tasks:[],properties:[],deals:[],audit:[]};
 function toast(message,error=false){let n=document.createElement('div');n.className='toast'+(error?' error':'');n.textContent=message;$('toastbox').append(n);setTimeout(()=>n.remove(),4300);}
-function connection(){const c=window.ESTATEFLOW_CONFIG||{};let saved={};try{saved=JSON.parse(localStorage.getItem('estateflow_config')||'{}')}catch{};const url=(c.url||'').startsWith('http')?c.url:saved.url;const key=(c.publishableKey||'').startsWith('PASTE_')?saved.key:c.publishableKey;return {url,key};}
-function initClient(){config=connection();if(!/^https:\/\/[^\s/]+\.supabase\.co\/?$/.test(config.url||'') || !config.key || !window.supabase?.createClient){
- $('connectionHint').innerHTML='<div class="hint">يلزم إعداد <b>Project URL</b> و<b>Publishable Key</b> من Supabase أولًا. افتح «إعداد الاتصال» أو عدّل القيم أعلى ملف HTML.</div>';return false;
-}try{client=window.supabase.createClient(config.url,config.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});$('connectionHint').innerHTML='';return true;}catch(e){$('connectionHint').innerHTML='<div class="login-error">'+E(e.message)+'</div>';return false;}}
+function connection() {
+  // Always use the published configuration, never browser-saved connection details.
+  const c = window.ESTATEFLOW_CONFIG || {};
+  return {
+    url: String(c.url || '').trim().replace(/\/$/, ''),
+    key: String(c.publishableKey || '').trim()
+  };
+}
+function initClient() {
+  config = connection();
+  const validUrl = /^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(config.url);
+  const validKey = /^(sb_publishable_[A-Za-z0-9_-]+|eyJ[A-Za-z0-9_.-]+)$/.test(config.key)
+    && !/(YOUR_|PASTE_|EXAMPLE|REPLACE)/i.test(config.key);
+  const sdkReady = !!window.supabase?.createClient;
+  if (!validUrl || !validKey || !sdkReady) {
+    $('connectionHint').innerHTML = '<div class="login-error">تعذر الاتصال بـ Supabase. تأكد من وضع Project URL وPublishable Key الحقيقيين داخل ملف index.html في GitHub. لا تحتاج لإعداد الاتصال من داخل المتصفح.</div>';
+    return false;
+  }
+  try {
+    client = window.supabase.createClient(config.url, config.key, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+    });
+    $('connectionHint').innerHTML = '';
+    return true;
+  } catch (e) {
+    $('connectionHint').innerHTML = '<div class="login-error">' + E(e.message) + '</div>';
+    return false;
+  }
+}
 async function bootstrap(){if(!initClient())return;try{const {data:{session},error}=await client.auth.getSession();if(error)throw error;if(session?.user)await enter(session.user);else showLogin();}catch(e){showLogin();toast(friendly(e),true);}}
 function showLogin(){user=null;profile=null;$('authScreen').classList.remove('hidden');$('appShell').classList.add('hidden');}
 async function enter(u){user=u;const {data:p,error}=await client.from('crm_profiles').select('*').eq('id',u.id).maybeSingle();if(error)throw error;
@@ -190,7 +310,7 @@ function renderTeam(){if(!isManager())return '<div class="empty">ليس لديك
 `<div class="panel"><div class="table-wrap"><table class="table"><thead><tr><th>الموظف</th><th>البريد</th><th>الصلاحية</th><th>الحالة</th><th>العملاء</th><th>المكالمات</th><th>إجراء</th></tr></thead><tbody>${data.profiles.map(p=>`<tr><td class="name">${E(p.full_name)}</td><td class="ltr">${E(p.email||'—')}</td><td>${badge(roleLabels[p.role],p.role==='admin'?'purple':p.role==='manager'?'green':'gray')}</td><td>${badge(p.active?'نشط':'موقوف',p.active?'green':'red')}</td><td>${data.leads.filter(l=>l.assigned_to===p.id).length}</td><td>${data.activities.filter(a=>a.agent_id===p.id).length}</td><td>${isAdmin()?`<button class="btn small" data-action="edit-profile" data-id="${p.id}">تعديل</button>`:'—'}</td></tr>`).join('')}</tbody></table></div><div class="hint">إنشاء حسابات Supabase Auth وإرسال الدعوات يتم من <b>Authentication → Users</b> في لوحة Supabase، ثم يظهر الموظف هنا تلقائيًا.</div></div>`;}
 function renderAudit(){if(!isManager())return '<div class="empty">ليس لديك صلاحية</div>';return header('سجل التغييرات','آخر 500 عملية محفوظة للأدمن والمدير في قاعدة البيانات')+`<div class="panel"><div class="table-wrap"><table class="table"><thead><tr><th>التاريخ</th><th>الموظف</th><th>الجدول</th><th>العملية</th><th>رقم السجل</th></tr></thead><tbody>${data.audit.map(a=>`<tr><td>${fmtDate(a.created_at)}</td><td>${E(profileName(a.actor_id))}</td><td>${E(a.table_name)}</td><td>${badge(a.action,a.action==='INSERT'?'green':a.action==='UPDATE'?'amber':'red')}</td><td class="ltr mini">${E(a.row_id)}</td></tr>`).join('')||'<tr><td colspan="5" class="empty">لا توجد تغييرات</td></tr>'}</tbody></table></div></div>`;}
 function renderSettings(){return header('الإعدادات والمساعدة','إرشادات التشغيل وحالة الاتصال وتفعيل تنبيهات المتابعة')+
-`<div class="cols-2"><div class="panel"><h3 class="section-title">اتصال Supabase</h3><div class="divider"></div><p><b>المشروع:</b> <span class="ltr">${E(config.url)}</span></p><p><b>الحساب:</b> <span class="ltr">${E(user?.email)}</span></p><p><b>الدور:</b> ${E(roleLabels[profile.role])}</p><div class="btnrow"><button class="btn" data-action="change-password">تغيير كلمة المرور</button><button class="btn" data-action="show-config">إعدادات الاتصال</button></div></div><div class="panel"><h3 class="section-title">التنبيهات</h3><p class="muted">تذكيرات المتابعات تظهر داخل الموقع. إشعارات المتصفح تعمل عندما يكون الموقع مفتوحًا وبعد السماح بها. لا توجد إشعارات Push تعمل في الخلفية دون خادم.</p><button class="btn primary" data-action="enable-notifications">🔔 تفعيل إشعارات المتصفح</button></div></div>
+`<div class="cols-2"><div class="panel"><h3 class="section-title">اتصال Supabase</h3><div class="divider"></div><p><b>المشروع:</b> <span class="ltr">${E(config.url)}</span></p><p><b>الحساب:</b> <span class="ltr">${E(user?.email)}</span></p><p><b>الدور:</b> ${E(roleLabels[profile.role])}</p><div class="btnrow"><button class="btn" data-action="change-password">تغيير كلمة المرور</button></div></div><div class="panel"><h3 class="section-title">التنبيهات</h3><p class="muted">تذكيرات المتابعات تظهر داخل الموقع. إشعارات المتصفح تعمل عندما يكون الموقع مفتوحًا وبعد السماح بها. لا توجد إشعارات Push تعمل في الخلفية دون خادم.</p><button class="btn primary" data-action="enable-notifications">🔔 تفعيل إشعارات المتصفح</button></div></div>
 <div class="panel"><h3 class="section-title">ماذا يدعم النظام؟</h3><p class="muted">إدارة العملاء، تحديث الحالات، المكالمات الصادرة والواردة وتوثيق نتائجها، الاتصال والواتساب بنقرة، المتابعات والمعاينات، المطابقة البسيطة مع العقارات، الصفقات والعمولات، تقارير الموظفين، إدارة الصلاحيات، الأرشفة، سجل التغييرات، والاستيراد والتصدير CSV. بيانات كل موظف محمية على مستوى قاعدة البيانات RLS.</p><p class="muted">تسجيل المكالمة صوتيًا تلقائيًا، الاتصال التلقائي من داخل الموقع، إرسال رسائل واتساب دون فتح التطبيق، وإشعارات Push بعد إغلاق الصفحة تحتاج ربطًا رسميًا بخدمة اتصالات/واتساب وسيرفر أو Supabase Edge Functions.</p></div>`;}
 function field(label,name,value='',type='text',attrs='',full=false){return `<div class="field ${full?'full':''}"><label>${label}</label><input name="${name}" type="${type}" value="${E(value??'')}" ${attrs} /></div>`;}
 function selectField(label,name,values,current='',full=false,blank='اختر'){return `<div class="field ${full?'full':''}"><label>${label}</label><select name="${name}">${options(values,current,blank)}</select></div>`;}
@@ -256,120 +376,4 @@ if(detailTab==='history')return activities.length?`<div class="timeline">${activ
 if(detailTab==='tasks')return tasks.length?`<div class="item-list">${tasks.map(taskMini).join('')}</div>`:'<div class="empty">لا توجد متابعات مسجلة</div>';
 return matches.length?matches.map(p=>`<div class="match-card"><div style="display:flex;gap:10px;align-items:center">${safeUrl(p.photo_url)?`<img src="${safeUrl(p.photo_url)}" alt="صورة العقار" loading="lazy" referrerpolicy="no-referrer" />`:''}<div><strong>${E(p.title)}</strong><div class="muted mini">${E([p.city,p.district,p.property_type].filter(Boolean).join(' · '))}</div><b>${money(p.price)}</b></div></div><button class="btn small" data-action="view-property" data-id="${p.id}">عرض</button></div>`).join(''):'<div class="empty">لا توجد وحدات مطابقة للشروط الحالية. المطابقة تقديرية وتعتمد على بيانات العقار والعميل.</div>';}
 function showLead(id){const l=data.leads.find(x=>x.id===id);if(!l)return toast('لا يوجد وصول لهذا العميل',true);activeLead=l.id;detailTab='history';const acts=data.activities.filter(a=>a.lead_id===l.id&&a.type==='call');const callHref=l.do_not_call?'':phoneHref(l.phone),wp=whatsappHref(l.phone);
-modal('ملف العميل: '+l.name,`<div class="btnrow" style="margin-bottom:15px"><button class="btn primary" data-action="edit-lead" data-id="${l.id}">✎ تعديل العميل</button>${l.do_not_call?badge('لا تتصل','red'):`<a class="btn" href="${callHref}">☎ اتصال</a><a class="btn" href="${wp}" target="_blank" rel="noopener noreferrer">واتساب</a>`}<button class="btn" data-action="new-activity" data-id="${l.id}">＋ تسجيل مكالمة</button><button class="btn" data-action="new-task" data-id="${l.id}">◷ متابعة</button><button class="btn" data-action="new-deal" data-id="${l.id}">◇ صفقة</button>${isManager()?`<button class="btn ${l.archived_at?'soft':'danger'}" data-action="archive-lead" data-id="${l.id}">${l.archived_at?'استعادة':'أرشفة'}</button>`:''}</div>
-<div class="details-grid"><div class="detail-block"><span>الهاتف</span><strong class="ltr">${E(l.phone)} ${l.alt_phone?' · '+E(l.alt_phone):''}</strong></div><div class="detail-block"><span>المرحلة / التصنيف</span><strong>${stageBadge(l.status)} ${tempBadge(l.temperature)}</strong></div><div class="detail-block"><span>الموظف المسؤول</span><strong>${E(profileName(l.assigned_to))}</strong></div><div class="detail-block"><span>المصدر / الحملة</span><strong>${E(l.source)} ${l.campaign?'· '+E(l.campaign):''}</strong></div><div class="detail-block"><span>طلب العميل</span><strong>${E(labelOf(purposes,l.purpose))} ${E(l.property_type||'')} · ${E([l.city,l.district].filter(Boolean).join(' - '))}</strong></div><div class="detail-block"><span>الميزانية</span><strong>${money(l.budget_min)} — ${money(l.budget_max)}</strong></div><div class="detail-block"><span>المتابعة القادمة</span><strong>${fmtDate(l.next_followup)}</strong></div><div class="detail-block"><span>عدد المكالمات المسجلة</span><strong>${acts.length}</strong></div></div>
-${l.notes?`<div class="hint"><b>ملاحظات:</b> ${E(l.notes)}</div>`:''}<div>${(l.tags||[]).map(t=>`<span class="tag">${E(t)}</span>`).join('')}</div><div class="divider"></div>
-<div class="tabs"><button class="tab active" data-action="lead-tab" data-tab="history">تاريخ التواصل (${data.activities.filter(a=>a.lead_id===l.id).length})</button><button class="tab" data-action="lead-tab" data-tab="tasks">المتابعات (${data.tasks.filter(t=>t.lead_id===l.id).length})</button><button class="tab" data-action="lead-tab" data-tab="matches">عقارات مطابقة (${matchProperties(l).length})</button></div><div id="leadDetailTab">${leadDetailBody(l)}</div>`,true);}
-function showProperty(id){const p=data.properties.find(x=>x.id===id);if(!p)return;const photo=safeUrl(p.photo_url),video=safeUrl(p.video_url);
-modal(p.title,`${photo?`<img src="${photo}" alt="صورة العقار" style="width:100%;max-height:290px;object-fit:cover;border-radius:12px;margin-bottom:14px" referrerpolicy="no-referrer" />`:''}
-<div class="details-grid"><div class="detail-block"><span>الكود</span><strong>${E(p.code||'—')}</strong></div><div class="detail-block"><span>السعر</span><strong>${money(p.price)}</strong></div><div class="detail-block"><span>المنطقة</span><strong>${E([p.city,p.district].filter(Boolean).join(' - '))}</strong></div><div class="detail-block"><span>الوصف</span><strong>${E(p.property_type)} · ${p.rooms??'—'} غرف · ${p.bathrooms??'—'} حمامات · ${p.area_sqm??'—'}م²</strong></div><div class="detail-block"><span>الحالة</span><strong>${E(labelOf(propertyStatuses,p.status))}</strong></div><div class="detail-block"><span>مالك الوحدة</span><strong>${E(p.owner_name||'—')} · ${E(p.owner_phone||'—')}</strong></div></div>
-<p style="line-height:2">${E(p.description||'')}</p><div class="btnrow">${video?`<a href="${video}" target="_blank" rel="noopener noreferrer" class="btn">▶ فيديو العقار</a>`:''}${isManager()?`<button class="btn primary" data-action="edit-property" data-id="${p.id}">تعديل العقار</button><button class="btn ${p.archived_at?'soft':'danger'}" data-action="archive-property" data-id="${p.id}">${p.archived_at?'استعادة':'أرشفة'}</button>`:''}</div>`);}
-function alerts(){return data.tasks.filter(t=>t.status==='open'&&new Date(t.due_at).getTime()<Date.now()+86400000).sort((a,b)=>new Date(a.due_at)-new Date(b.due_at));}
-function updateAlerts(){$('alertBtn').textContent=`🔔 المتابعات (${alerts().length})`;}
-function showAlerts(){modal('المتابعات القادمة والمتأخرة (خلال 24 ساعة)',`<div class="item-list">${alerts().map(taskMini).join('')||'<div class="empty">لا توجد مواعيد قريبة</div>'}</div>`);}
-const txt = (fd,key) => String(fd.get(key)||'').trim();
-const num = (fd,key) => txt(fd,key)===''?null:Number(txt(fd,key));
-async function saveForm(form){const fd=new FormData(form),kind=form.dataset.form,id=form.dataset.id||null;const submit=form.querySelector('button[type="submit"]');if(submit){submit.disabled=true;submit.textContent='جاري الحفظ...';}
-try{
- if(kind==='lead'){
-   const payload={name:txt(fd,'name'),phone:txt(fd,'phone'),alt_phone:txt(fd,'alt_phone')||null,source:txt(fd,'source')||'غير محدد',campaign:txt(fd,'campaign')||null,city:txt(fd,'city')||null,district:txt(fd,'district')||null,property_type:txt(fd,'property_type')||null,purpose:txt(fd,'purpose'),budget_min:num(fd,'budget_min'),budget_max:num(fd,'budget_max'),rooms:num(fd,'rooms'),temperature:txt(fd,'temperature'),status:txt(fd,'status'),next_followup:iso(txt(fd,'next_followup')),expected_value:num(fd,'expected_value'),lost_reason:txt(fd,'lost_reason')||null,tags:txt(fd,'tags').split(',').map(x=>x.trim()).filter(Boolean),notes:txt(fd,'notes')||null,do_not_call:fd.has('do_not_call')};
-   if(payload.budget_min!==null&&payload.budget_max!==null&&payload.budget_min>payload.budget_max)throw Error('الميزانية القصوى لا يمكن أن تكون أصغر من الحد الأدنى.');
-   if(phoneKey(payload.phone).length<9)throw Error('رقم الهاتف قصير جدًا.');
-   if(!id){payload.created_by=user.id;payload.assigned_to=isManager()?(txt(fd,'assigned_to')||user.id):user.id;}
-   else if(isManager())payload.assigned_to=txt(fd,'assigned_to')||user.id;
-   const oldLead=id?data.leads.find(x=>x.id===id):null;
-   const saved=await write('crm_leads',payload,id);
-   if(payload.next_followup && new Date(payload.next_followup).getTime()!==new Date(oldLead?.next_followup||0).getTime()){
-     try{await write('crm_tasks',{lead_id:id||saved.id,title:'متابعة العميل',kind:'followup',due_at:payload.next_followup,status:'open',assigned_to:payload.assigned_to||oldLead?.assigned_to||user.id,created_by:user.id});}
-     catch(err){toast('تم حفظ العميل، لكن تعذر إنشاء مهمة المتابعة: '+friendly(err),true);}
-   }
- }else if(kind==='activity'){
-   let leadId=txt(fd,'lead_id');if(!leadId)throw Error('اختر العميل أولًا.');let lead=data.leads.find(x=>x.id===leadId);if(!lead)throw Error('العميل غير موجود.');
-   const activity={lead_id:leadId,agent_id:user.id,type:txt(fd,'type'),direction:txt(fd,'direction')||null,outcome:txt(fd,'outcome')||null,duration_seconds:txt(fd,'duration_minutes')?Math.round(Number(txt(fd,'duration_minutes'))*60):null,notes:txt(fd,'notes')||null,occurred_at:iso(txt(fd,'occurred_at'))||new Date().toISOString()};
-   await write('crm_activities',activity);
-   const follow=txt(fd,'followup');if(follow){try{const due=iso(follow);await write('crm_tasks',{lead_id:leadId,title:'متابعة بعد مكالمة',kind:'followup',due_at:due,assigned_to:isManager()?lead.assigned_to:user.id,created_by:user.id,status:'open'});await write('crm_leads',{next_followup:due},leadId);}catch(err){toast('تم حفظ النشاط، لكن المتابعة لم تكتمل: '+friendly(err),true);}}
- }else if(kind==='task'){
-   const leadId=txt(fd,'lead_id');if(!leadId)throw Error('اختر العميل.');const p={lead_id:leadId,title:txt(fd,'title'),kind:txt(fd,'kind'),due_at:iso(txt(fd,'due_at')),status:txt(fd,'status'),notes:txt(fd,'notes')||null};
-   if(p.status==='done')p.completed_at=new Date().toISOString();else p.completed_at=null;
-   if(!id){p.created_by=user.id;p.assigned_to=isManager()?(txt(fd,'assigned_to')||user.id):user.id;}else if(isManager())p.assigned_to=txt(fd,'assigned_to')||user.id;
-   await write('crm_tasks',p,id);
-   const related=data.tasks.filter(t=>t.lead_id===leadId&&t.id!==id&&t.status==='open').map(t=>t.due_at);
-   if(p.status==='open')related.push(p.due_at);
-   const next=related.sort((a,b)=>new Date(a)-new Date(b))[0]||null;
-   try{await write('crm_leads',{next_followup:next},leadId);}catch(err){toast('تم حفظ المهمة، لكن تاريخ المتابعة على العميل لم يتحدث: '+friendly(err),true);}
- }else if(kind==='property'){
-   if(!isManager())throw Error('ليس لديك صلاحية.');const p={title:txt(fd,'title'),code:txt(fd,'code')||null,listing_type:txt(fd,'listing_type'),property_type:txt(fd,'property_type'),city:txt(fd,'city')||null,district:txt(fd,'district')||null,price:num(fd,'price'),area_sqm:num(fd,'area_sqm'),rooms:num(fd,'rooms'),bathrooms:num(fd,'bathrooms'),status:txt(fd,'status'),owner_name:txt(fd,'owner_name')||null,owner_phone:txt(fd,'owner_phone')||null,photo_url:txt(fd,'photo_url')||null,video_url:txt(fd,'video_url')||null,description:txt(fd,'description')||null};
-   for(const url of [p.photo_url,p.video_url])if(url&&!safeUrl(url))throw Error('رابط الصور أو الفيديو يجب أن يكون HTTP أو HTTPS.');
-   if(!id)p.created_by=user.id;await write('crm_properties',p,id);
- }else if(kind==='deal'){
-   let leadId=txt(fd,'lead_id');if(!leadId)throw Error('اختر العميل.');const p={lead_id:leadId,title:txt(fd,'title'),property_id:txt(fd,'property_id')||null,amount:num(fd,'amount')||0,commission:num(fd,'commission')||0,stage:txt(fd,'stage'),close_date:txt(fd,'close_date')||null};
-   if(!id){p.created_by=user.id;p.assigned_to=isManager()?(txt(fd,'assigned_to')||user.id):user.id;}else if(isManager())p.assigned_to=txt(fd,'assigned_to')||user.id;
-   await write('crm_deals',p,id);
- }else if(kind==='profile'){
-   if(!isAdmin())throw Error('خاص بالأدمن فقط.');const {error}=await client.rpc('crm_manage_profile',{p_id:id,p_role:txt(fd,'role'),p_active:txt(fd,'active')==='true',p_full_name:txt(fd,'full_name')});if(error)throw error;
- }
- closeModal();toast('تم حفظ البيانات بنجاح ✓');await reload();
-}catch(e){toast(friendly(e),true);if(submit){submit.disabled=false;submit.textContent='💾 حفظ البيانات';}}
-}
-async function completeTask(id){const t=data.tasks.find(x=>x.id===id);if(!t||t.status!=='open')return;try{await write('crm_tasks',{status:'done',completed_at:new Date().toISOString()},id);
- const remaining=data.tasks.filter(x=>x.lead_id===t.lead_id&&x.id!==id&&x.status==='open').map(x=>x.due_at).sort((a,b)=>new Date(a)-new Date(b));
- try{await write('crm_leads',{next_followup:remaining[0]||null},t.lead_id);}catch(err){toast('المهمة اكتملت لكن تاريخ العميل لم يتحدث: '+friendly(err),true);}
- toast('تم إنهاء المتابعة ✓');const wasModal=!!activeLead;await reload();if(wasModal){let x=t.lead_id;showLead(x);detailTab='tasks';$('leadDetailTab').innerHTML=leadDetailBody(data.leads.find(l=>l.id===x));}}catch(e){toast(friendly(e),true);}}
-async function archiveItem(table,id){if(!isManager())return toast('الأرشفة للمدير فقط',true);let item=(table==='crm_leads'?data.leads:data.properties).find(x=>x.id===id);if(!item)return;let act=item.archived_at?'استعادة':'أرشفة';if(!confirm(`تأكيد ${act} هذا العنصر؟ (لن يتم حذف البيانات)`))return;
-try{await write(table,{archived_at:item.archived_at?null:new Date().toISOString()},id);closeModal();toast('تم '+act+' العنصر');await reload();}catch(e){toast(friendly(e),true);}}
-async function bulkAssign(){if(!isManager())return;const id=$('bulkAgent')?.value;if(!id||!selectedLeads.size)return toast('حدد عميلاً واحدًا على الأقل واختر الموظف.',true);let ids=[...selectedLeads];if(!confirm(`توزيع ${ids.length} عميل على ${profileName(id)}؟`))return;try{const {error}=await client.from('crm_leads').update({assigned_to:id}).in('id',ids);if(error)throw error;selectedLeads.clear();toast(`تم توزيع ${ids.length} عميل`);await reload();}catch(e){toast(friendly(e),true);}}
-function csvCell(value){let s=String(value??'');if(/^[\u0000-\u0020]*[=+\-@]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';}
-function downloadCSV(filename,headers,rows){const contents='\uFEFF'+[headers,...rows].map(row=>row.map(csvCell).join(',')).join('\r\n');const blob=new Blob([contents],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);}
-function exportData(which){const date=new Date().toISOString().slice(0,10);if(which==='leads')downloadCSV(`estateflow_leads_${date}.csv`,['name','phone','alt_phone','source','campaign','city','district','property_type','purpose','budget_min','budget_max','rooms','temperature','status','assigned_to','next_followup','notes'],leadTableRows().map(l=>[l.name,l.phone,l.alt_phone,l.source,l.campaign,l.city,l.district,l.property_type,l.purpose,l.budget_min,l.budget_max,l.rooms,l.temperature,l.status,profileName(l.assigned_to),l.next_followup,l.notes]));
-else if(which==='calls')downloadCSV(`estateflow_activities_${date}.csv`,['date','lead','employee','type','direction','outcome','duration_seconds','notes'],data.activities.map(a=>[a.occurred_at,leadName(a.lead_id),profileName(a.agent_id),a.type,a.direction,a.outcome,a.duration_seconds,a.notes]));
-else if(which==='tasks')downloadCSV(`estateflow_tasks_${date}.csv`,['title','lead','due_at','kind','status','employee','notes'],data.tasks.map(t=>[t.title,leadName(t.lead_id),t.due_at,t.kind,t.status,profileName(t.assigned_to),t.notes]));
-else if(which==='deals')downloadCSV(`estateflow_deals_${date}.csv`,['title','lead','property','amount','commission','stage','close_date','employee'],data.deals.map(d=>[d.title,leadName(d.lead_id),propertyName(d.property_id),d.amount,d.commission,d.stage,d.close_date,profileName(d.assigned_to)]));
-else if(which==='report')downloadCSV(`estateflow_report_${date}.csv`,['employee','calls_last30d','answered_last30d','leads_total','deals_closed','commission_closed'],(isManager()?data.profiles:[profile]).map(p=>[p.full_name,periodActivity(30).filter(a=>a.agent_id===p.id&&a.type==='call').length,periodActivity(30).filter(a=>a.agent_id===p.id&&['answered','interested','callback','scheduled'].includes(a.outcome)).length,data.leads.filter(l=>l.assigned_to===p.id).length,data.deals.filter(d=>d.assigned_to===p.id&&d.stage==='closed').length,data.deals.filter(d=>d.assigned_to===p.id&&d.stage==='closed').reduce((s,d)=>s+Number(d.commission||0),0)]));
-}
-function parseCsv(input){let result=[],row=[],value='',quoted=false;input=input.replace(/^\uFEFF/,'');for(let i=0;i<input.length;i++){const c=input[i];if(quoted){if(c==='"'&&input[i+1]==='"'){value+='"';i++;}else if(c==='"')quoted=false;else value+=c;}else if(c==='"')quoted=true;else if(c===','){row.push(value);value='';}else if(c==='\n'){row.push(value.replace(/\r$/,''));result.push(row);row=[];value='';}else value+=c;}if(value||row.length){row.push(value);result.push(row);}return result;}
-function showImport(){modal('استيراد العملاء من CSV',`<div class="hint">الأعمدة المطلوبة <b>name, phone</b>، والمسموحة إضافيًا: source, city, district, property_type, purpose, budget_max, temperature, notes. الحد الأقصى 200 عميل في كل مرة. ستُتجاهل الأرقام المكررة عند الاكتشاف، ويُرفض المكرر في قاعدة البيانات حتى لو كان لدى موظف آخر.</div><div class="btnrow" style="margin:14px 0"><button class="btn" data-action="download-template">⇩ نموذج CSV جاهز</button></div><form data-form="import"><div class="field"><label>ملف CSV بترميز UTF-8</label><input name="file" type="file" accept=".csv,text/csv" required /></div><div class="hint">العملاء المستوردون سيُسندون لحسابك افتراضيًا. ارفع دفعات صغيرة وتحقق من أرقامها قبل الاستيراد.</div>${submitButtons()}</form>`);}
-async function importCSV(form){const file=new FormData(form).get('file');if(!file||!file.name)throw Error('اختر ملف CSV.');const text=await file.text(),rows=parseCsv(text).filter(r=>r.some(c=>c.trim()));if(rows.length<2)throw Error('الملف فارغ.');const headers=rows.shift().map(x=>x.trim().toLowerCase());const names={name:['name','الاسم','اسم العميل'],phone:['phone','mobile','الهاتف','رقم الهاتف'],source:['source','المصدر'],city:['city','المدينة'],district:['district','المنطقة'],property_type:['property_type','نوع العقار'],purpose:['purpose','الغرض'],budget_max:['budget_max','الميزانية'],temperature:['temperature','التصنيف'],notes:['notes','ملاحظات']};let indexes={};for(const [k,aliases] of Object.entries(names))indexes[k]=headers.findIndex(h=>aliases.includes(h));if(indexes.name<0||indexes.phone<0)throw Error('اسم العمودين name و phone مطلوبان.');if(rows.length>200)throw Error('الحد الأقصى 200 صف في الملف الواحد.');let created=0,skipped=0,failed=0;const seen=new Set(data.leads.map(l=>l.phone_key));for(const row of rows){const get=k=>indexes[k]<0?'':String(row[indexes[k]]||'').trim();const key=phoneKey(get('phone'));if(!get('name')||key.length<9||seen.has(key)){skipped++;continue;}seen.add(key);const p={name:get('name'),phone:get('phone'),source:get('source')||'CSV Import',city:get('city')||null,district:get('district')||null,property_type:get('property_type')||null,purpose:['buy','rent','sell'].includes(get('purpose'))?get('purpose'):'buy',budget_max:Number(get('budget_max'))||null,temperature:['hot','warm','cold'].includes(get('temperature'))?get('temperature'):'warm',notes:get('notes')||null,created_by:user.id,assigned_to:user.id};const {error}=await client.from('crm_leads').insert(p);if(error){if(error.code==='23505')skipped++;else failed++;}else created++;}
-closeModal();toast(`الاستيراد: ${created} جديد، ${skipped} متجاوز، ${failed} فشل${failed?' (راجع التنسيق والصلاحيات)':''}`,failed>0);await reload();}
-function showConfig(){let c=connection();modal('إعداد اتصال Supabase',`<div class="hint">استخدم <b>Project URL</b> و<b>Publishable Key / anon key</b> فقط. ممنوع إدخال <code>secret</code> أو <code>service_role</code>؛ وضعهما في موقع GitHub عام يعرض بيانات الشركة للخطر.</div><form data-form="config"><div class="form-grid">${field('Project URL','url',c.url||'','url','required placeholder="https://xxx.supabase.co"',true)}${field('Publishable / anon key','key',c.key||'','text','required dir="ltr"',true)}</div>${submitButtons()}</form>`);}
-async function saveConfig(form){let fd=new FormData(form),url=txt(fd,'url').replace(/\/$/,''),key=txt(fd,'key');if(!/^https:\/\/[^\s/]+\.supabase\.co$/.test(url))throw Error('ادخل رابط مشروع Supabase الصحيح.');if(!key||key.includes('service_role')||key.startsWith('sb_secret_'))throw Error('مفتاح secret/service_role ممنوع في المتصفح.');localStorage.setItem('estateflow_config',JSON.stringify({url,key}));toast('تم حفظ إعداد الاتصال في هذا المتصفح.');window.location.reload();}
-function showPasswordChange(){modal('تعيين / تغيير كلمة المرور',`<div class="hint">عند دخولك لأول مرة من دعوة Supabase، عيّن كلمة مرور خاصة بك من هنا. استخدم كلمة قوية وفريدة.</div><form data-form="password"><div class="form-grid">${field('كلمة المرور الجديدة (8 أحرف على الأقل)','password','','password','required minlength="8"',true)}${field('تأكيد كلمة المرور','confirm','','password','required minlength="8"',true)}</div>${submitButtons()}</form>`);}
-async function resetPassword(){let email=$('loginEmail').value.trim();if(!email){toast('اكتب بريدك الإلكتروني أولًا.',true);return;}if(!client&&!initClient())return;
-const redirectTo=window.location.origin+window.location.pathname;
-const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo});if(error)throw error;
-$('loginMessage').textContent='لو البريد مسجل، هتوصلك رسالة استعادة كلمة المرور. بعد فتح الرابط، ادخل الإعدادات وحدد كلمة مرور جديدة.';
-}
-async function enableNotifications(){if(!('Notification' in window)){toast('متصفحك لا يدعم إشعارات النظام.',true);return;}let p=await Notification.requestPermission();toast(p==='granted'?'تم تفعيل إشعارات المتصفح':'لم يتم السماح بالإشعارات',p!=='granted');}
-function tickNotifications(){if(!user||!('Notification'in window)||Notification.permission!=='granted')return;const now=Date.now();for(const t of alerts().filter(x=>{let d=new Date(x.due_at).getTime()-now;return d>=-120000&&d<=600000;}).slice(0,3)){if(notifySeen.has(t.id))continue;notifySeen.add(t.id);try{new Notification('متابعة عقارية: '+t.title,{body:leadName(t.lead_id)+' · '+fmtDate(t.due_at),tag:'crm-'+t.id});}catch{}}}
-
-document.addEventListener('submit',async e=>{const form=e.target;if(!(form instanceof HTMLFormElement))return;if(form.id==='loginForm'){
-e.preventDefault();$('loginMessage').textContent='';if(!client&&!initClient())return;const btn=$('loginBtn');btn.disabled=true;btn.textContent='جاري الدخول...';try{const {data:auth,error}=await client.auth.signInWithPassword({email:$('loginEmail').value.trim(),password:$('loginPassword').value});if(error)throw error;await enter(auth.user);}catch(err){$('loginMessage').innerHTML=`<div class="login-error">${E(friendly(err))}</div>`;}finally{btn.disabled=false;btn.textContent='تسجيل الدخول ←';}return;}
-if(form.dataset.form){e.preventDefault();try{if(form.dataset.form==='config')await saveConfig(form);else if(form.dataset.form==='password'){const fd=new FormData(form),p=txt(fd,'password');if(p.length<8||p!==txt(fd,'confirm'))throw Error('كلمة المرور قصيرة أو غير مطابقة للتأكيد.');const {error}=await client.auth.updateUser({password:p});if(error)throw error;closeModal();toast('تم تحديث كلمة المرور بنجاح.');}else if(form.dataset.form==='import'){const btn=form.querySelector('button[type="submit"]');btn.disabled=true;btn.textContent='جاري الاستيراد...';await importCSV(form);}else await saveForm(form);}catch(err){toast(friendly(err),true);const btn=form.querySelector('button[type="submit"]');if(btn){btn.disabled=false;btn.textContent='💾 حفظ البيانات';}}}
-});
-document.addEventListener('input',e=>{if(e.target.matches('[data-filter]')){filters.leads[e.target.dataset.filter]=e.target.value;selectedLeads.clear();if($('leadsContent'))$('leadsContent').innerHTML=leadTable();}if(e.target.matches('[data-pfilter]')){filters.properties[e.target.dataset.pfilter]=e.target.value;if($('propertiesContent'))$('propertiesContent').innerHTML=propertyTable();}});
-document.addEventListener('change',e=>{if(e.target.matches('[data-filter]')){filters.leads[e.target.dataset.filter]=e.target.value;selectedLeads.clear();if($('leadsContent'))$('leadsContent').innerHTML=leadTable();}if(e.target.matches('[data-pfilter]')){filters.properties[e.target.dataset.pfilter]=e.target.value;if($('propertiesContent'))$('propertiesContent').innerHTML=propertyTable();}
-if(e.target.matches('.lead-check')){e.target.checked?selectedLeads.add(e.target.value):selectedLeads.delete(e.target.value);}if(e.target.id==='checkAllLeads'){document.querySelectorAll('.lead-check').forEach(c=>{c.checked=e.target.checked;c.checked?selectedLeads.add(c.value):selectedLeads.delete(c.value);});}});
-document.addEventListener('click',async e=>{
-const navButton=e.target.closest('[data-page]');if(navButton){e.preventDefault();nav(navButton.dataset.page);return;}
-const b=e.target.closest('[data-action]');if(!b)return;e.preventDefault();const a=b.dataset.action,id=b.dataset.id;try{switch(a){
-case 'show-config':showConfig();break;case 'change-password':showPasswordChange();break;case 'reset-password':await resetPassword();break;case 'close-modal':closeModal();break;case 'menu':$('sidebar').classList.toggle('open');break;
-case 'logout':{if(client)await client.auth.signOut();closeModal();showLogin();toast('تم تسجيل الخروج');break;}
-case 'refresh':await reload();break;case 'new-lead':editLead();break;case 'edit-lead':editLead(id);break;case 'view-lead':showLead(id);break;
-case 'new-activity':editActivity(id);break;case 'new-task':editTask(null,id);break;case 'edit-task':editTask(id);break;
-case 'new-property':editProperty();break;case 'edit-property':editProperty(id);break;case 'view-property':showProperty(id);break;
-case 'new-deal':editDeal(null,id);break;case 'edit-deal':editDeal(id);break;case 'edit-profile':editProfile(id);break;
-case 'complete-task':await completeTask(id);break;case 'archive-lead':await archiveItem('crm_leads',id);break;case 'archive-property':await archiveItem('crm_properties',id);break;
-case 'lead-tab':{detailTab=b.dataset.tab;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===detailTab));const l=data.leads.find(x=>x.id===activeLead);if(l&&$('leadDetailTab'))$('leadDetailTab').innerHTML=leadDetailBody(l);break;}
-case 'bulk-assign':await bulkAssign();break;case 'show-alerts':showAlerts();break;case 'import-csv':showImport();break;
-case 'export-leads':exportData('leads');break;case 'export-calls':exportData('calls');break;case 'export-tasks':exportData('tasks');break;case 'export-deals':exportData('deals');break;case 'export-report':exportData('report');break;
-case 'download-template':downloadCSV('estateflow_import_template.csv',['name','phone','source','city','district','property_type','purpose','budget_max','temperature','notes'],[['عميل مثال','01012345678','Facebook','القاهرة','التجمع الخامس','شقة','buy',3000000,'hot','مهتم بمعاينة']]);break;
-case 'invite-help':modal('إضافة حساب موظف',`<div class="hint">لأن استدعاء <b>Auth Admin API</b> يتطلب مفتاحًا سريًا، فلا يمكن إنشاء الحسابات بأمان مباشرة من GitHub Pages. افتح Supabase Dashboard → Authentication → Users → Add user → Send invitation. بعد قبول الدعوة يظهر الموظف هنا، ويمكن للأدمن تعديل صلاحياته.</div><a class="btn primary" href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer">فتح لوحة Supabase</a>`);break;
-case 'enable-notifications':await enableNotifications();break;case 'print':window.print();break;
-}}catch(err){toast(friendly(err),true);}
-});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('modalRoot').innerHTML)closeModal();});
-document.addEventListener('click',e=>{if(e.target.classList?.contains('modal-overlay'))closeModal();});
-setInterval(tickNotifications,60000);
-bootstrap();
-</script>
-</body>
-</html>
+modal('ملف العميل: '+l.name,`<div class="btnrow" style="margin-bottom:15px"><button class="btn primary" data-action="edit-lead" data-id="${l.id}">✎ تعديل العميل</button>${l.do_not_call?badge('لا تتصل','red'):`<a class="btn" href="${callHref}">☎ اتصال</a><a class="btn" href="${wp}" target="_blank" rel="noopener noreferrer">واتساب</a>`}<button class="btn" data-action="new-activity" data-id="${l.id}">＋ تسجيل مكالمة</button><button class="btn" data-action="new-task" data-id="${l.id}">◷ متابعة</button><button class="btn" data-action="new-deal" data-id="${l.id}">◇ صفقة</button>${isManager()?`<button class="btn ${l.archived_at?'soft':'danger'}" data-action="archive-lead" data-id="${l.id}">${l.archived_at?'استعا
